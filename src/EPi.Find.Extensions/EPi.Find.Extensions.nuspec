@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+	<id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <description>$description$</description>
+	<iconUrl>https://cdn.geta.no/opensource/icons/Geta-logo-3.png</iconUrl>
+	<projectUrl>https://github.com/Geta/EPi.Find.Extensions</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <copyright>Copyright © 2016 Geta</copyright>
+    <tags>EPiServer Find</tags>
+    <dependencies>
+      <dependency id="EPiServer.Find" version="12" />
+    </dependencies>
+  </metadata>
+</package>
