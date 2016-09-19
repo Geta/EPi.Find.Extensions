@@ -13,7 +13,7 @@
     <copyright>Copyright © 2016 Geta</copyright>
     <tags>EPiServer Find</tags>
     <dependencies>
-      <dependency id="EPiServer.Find" version="12" />
+      <dependency id="EPiServer.Find" version="12.0" />
     </dependencies>
   </metadata>
 </package>
