@@ -5,9 +5,9 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("EPi.Find.Extensions")]
+[assembly: AssemblyTitle("Geta.EPi.Find.Extensions")]
 [assembly: AssemblyDescription("EPiServer Find extensions library")]
-[assembly: AssemblyProduct("EPi.Find.Extensions")]
+[assembly: AssemblyProduct("Geta.EPi.Find.Extensions")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Geta")]
 [assembly: AssemblyCopyright("Copyright © Geta 2016")]

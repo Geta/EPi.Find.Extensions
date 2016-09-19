@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EPi.Find.Extensions", "src\EPi.Find.Extensions\EPi.Find.Extensions.csproj", "{8E0E2CAC-1D13-4F16-9D48-7FE12C17B464}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Geta.EPi.Find.Extensions", "src\Geta.EPi.Find.Extensions\Geta.EPi.Find.Extensions.csproj", "{8E0E2CAC-1D13-4F16-9D48-7FE12C17B464}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

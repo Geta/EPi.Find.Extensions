@@ -7,8 +7,8 @@
     <ProjectGuid>{8E0E2CAC-1D13-4F16-9D48-7FE12C17B464}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>EPi.Find.Extensions</RootNamespace>
-    <AssemblyName>EPi.Find.Extensions</AssemblyName>
+    <RootNamespace>Geta.EPi.Find.Extensions</RootNamespace>
+    <AssemblyName>Geta.EPi.Find.Extensions</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

@@ -6,7 +6,7 @@ using EPiServer.Find.Api.Querying;
 using EPiServer.Find.Helpers;
 using EPiServer.Find.Helpers.Reflection;
 
-namespace EPi.Find.Extensions
+namespace Geta.EPi.Find.Extensions
 {
     public static class TypeSearchExtensions
     {
