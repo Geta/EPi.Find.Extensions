@@ -10,7 +10,6 @@ namespace Geta.EPi.Find.Extensions
 {
     public static class TypeSearchExtensions
     {
-
         /// <summary>
         /// Add a filter conditionally, makes it easier to write a fluent query.
         /// </summary>
@@ -18,7 +17,7 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="search">The search.</param>
         /// <param name="condition">if set to <c>true</c> the filterExpression will be added.</param>
         /// <param name="filterExpression">The filter expression.</param>
-        /// <returns></returns>
+        /// <returns>Updated search.</returns>
         public static ITypeSearch<TSource> ConditionalFilter<TSource>(
             this ITypeSearch<TSource> search, bool condition, Expression<Func<TSource, Filter>> filterExpression)
         {
@@ -38,7 +37,7 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="search">The search.</param>
         /// <param name="fieldSelector">The field selector.</param>
         /// <param name="size">The number of facets to be returned.</param>
-        /// <returns></returns>
+        /// <returns>Updated search.</returns>
         public static ITypeSearch<TSource> TermsFacetFor<TSource>(
             this ITypeSearch<TSource> search, Expression<Func<TSource, string>> fieldSelector, int? size)
         {
@@ -53,7 +52,7 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="search">The search.</param>
         /// <param name="fieldSelector">The field selector.</param>
         /// <param name="size">The number of facets to be returned.</param>
-        /// <returns></returns>
+        /// <returns>Updated search.</returns>
         public static ITypeSearch<TSource> TermsFacetFor<TSource>(
             this ITypeSearch<TSource> search, Expression<Func<TSource, int>> fieldSelector, int? size)
         {
