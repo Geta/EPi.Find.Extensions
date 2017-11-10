@@ -59,6 +59,22 @@ namespace Geta.EPi.Find.Extensions
             return search.AddTermsFacetFor(fieldSelector, null, size);
         }
 
+        /// <summary>
+        /// Filters by page and page size
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <param name="search">The search.</param>
+        /// <param name="page">Page number.</param>
+        /// <param name="pageSize">Page size.</param>
+        /// <returns>Updated search.</returns>
+        public static ITypeSearch<TSource> FilterPaging<TSource>(
+            this ITypeSearch<TSource> search, int page, int pageSize)
+        {
+            var take = pageSize;
+            var skip = pageSize * (page - 1);
+            return search.Skip(skip).Take(take);
+        }
+
         private static ITypeSearch<TSource> AddTermsFacetFor<TSource>(
             this ITypeSearch<TSource> search, Expression fieldSelector, Action<TermsFacetRequest> facetRequestAction, int? size)
         {
