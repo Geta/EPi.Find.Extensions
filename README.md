@@ -8,9 +8,9 @@
 Extension methods for EPiServer Find.
 
 ## Features
-. Conditional filtering: Adds an easy way to add filters based on a condition.
-. Terms Facet: Retrieve TermsFacet for int properties instead of string properties.
-. Wildcards: Allows you to perform queries with wildcards.
+- Conditional filtering: Adds an easy way to add filters based on a condition.
+- Terms Facet: Retrieve TermsFacet for int properties instead of string properties.
+- Wildcards: Allows you to perform queries with wildcards.
 
 ## Examples
 
