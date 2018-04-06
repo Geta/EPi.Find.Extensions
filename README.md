@@ -1,3 +1,11 @@
+# Description
+Extensions for Episerver Find.
+
+# Features
+. Conditional filtering: Adds an easy way to add filters based on a condition.
+. Terms Facet: Retrieve TermsFacet for int properties instead of string properties.
+. Wildcards: Allows you to perform queries with wildcards.
+
 # Geta.EPi.Find.Extensions
 
 ![](http://tc.geta.no/app/rest/builds/buildType:(id:TeamFrederik_EPiFindExtensions_EPiFindExtensionsDebug)/statusIcon)
@@ -10,7 +18,6 @@ Extension methods for EPiServer Find.
 ## Examples
 
 ### Conditional filtering
-Adds an easy way to add filters based on a condition.
 ```csharp
 int? someId = ....;
 var searchResult = client.Search<any>()
@@ -21,7 +28,6 @@ var searchResult = client.Search<any>()
 ```
 
 ### TermsFacetFor on int / number properties
-Retrieve TermsFacet for int properties instead of string properties.
 Useful if you want to have the termfacet for a given id property (where the id is an int obviously).
 ```csharp
 public class Test {
@@ -50,4 +56,16 @@ var searchResult = client.Search<Test>()
 				// Resharper/IntelliSense does not like this notation too much
 				// And you obviously want to use it on int properties as well right!?
 				.TermsFacetFor(x => x.StringProp, r => r.Size = resultSize);
+```
+
+### Wildcards
+```csharp
+return typeSearch.For(query, stringQuery =>
+            {
+                stringQuery.Query = AddWildcards(stringQuery.Query.ToString());
+                stringQuery.AllowLeadingWildcard = allowLeadingWildcard;
+                stringQuery.AnalyzeWildcard = analyzeWildCard;
+                stringQuery.FuzzyMinSim = fuzzyMinSim;
+            });
+
 ```
