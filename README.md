@@ -69,3 +69,6 @@ return typeSearch.For(query, stringQuery =>
             });
 
 ```
+
+### Package Maintainer
+https://github.com/DigIntSys
