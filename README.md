@@ -1,21 +1,16 @@
-# Epi Find Extensions
-
-## Description
-Extensions for Episerver Find.
-
-## Features
-. Conditional filtering: Adds an easy way to add filters based on a condition.
-. Terms Facet: Retrieve TermsFacet for int properties instead of string properties.
-. Wildcards: Allows you to perform queries with wildcards.
-
 ## Geta.EPi.Find.Extensions
 
 ![](http://tc.geta.no/app/rest/builds/buildType:(id:TeamFrederik_EPiFindExtensions_EPiFindExtensionsDebug)/statusIcon)
 [![Platform](https://img.shields.io/badge/Platform-.NET%204.5.2-blue.svg?style=flat)](https://msdn.microsoft.com/en-us/library/w0x726c2%28v=vs.110%29.aspx)
 [![Platform](https://img.shields.io/badge/Episerver-%2010-orange.svg?style=flat)](http://world.episerver.com/cms/)
 
-
+## Description
 Extension methods for EPiServer Find.
+
+## Features
+. Conditional filtering: Adds an easy way to add filters based on a condition.
+. Terms Facet: Retrieve TermsFacet for int properties instead of string properties.
+. Wildcards: Allows you to perform queries with wildcards.
 
 ## Examples
 
