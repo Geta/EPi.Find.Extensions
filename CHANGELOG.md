@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 * Created CHANGELOG.md
-* Added Wildcard extension [ForWildcardSearch](https://www.google.com)
+* Added Wildcard extension [ForWildcardSearch](https://github.com/Geta/EPi.Find.Extensions/blob/master/src/Geta.EPi.Find.Extensions/TypeSearchExtensions.cs)
 
 ### Changed
 * Added features and description to readme.md
