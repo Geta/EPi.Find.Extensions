@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq.Expressions;
+using System.Text;
 using EPiServer.Find;
 using EPiServer.Find.Api.Facets;
 using EPiServer.Find.Api.Querying;
+using EPiServer.Find.Api.Querying.Queries;
 using EPiServer.Find.Helpers;
 using EPiServer.Find.Helpers.Reflection;
 
@@ -72,5 +74,49 @@ namespace Geta.EPi.Find.Extensions
                 action(x);
             }));
         }
+
+        /// <summary>
+        /// Search with wildcards
+        /// </summary>
+        /// <typeparam name="TSource"></typeparam>
+        /// <param name="typeSearch"></param>
+        /// <param name="query"></param>
+        /// <param name="allowLeadingWildcard"></param>
+        /// <param name="analyzeWildCard"></param>
+        /// <param name="fuzzyMinSim"></param>
+        /// <returns></returns>
+        public static IQueriedSearch<TSource, QueryStringQuery> ForWildcardSearch<TSource>(this ITypeSearch<TSource> typeSearch, string query, bool allowLeadingWildcard = true, bool analyzeWildCard = true, double fuzzyMinSim = 0.9)
+        {
+            return typeSearch.For(query, stringQuery =>
+            {
+                stringQuery.Query = AddWildcards(stringQuery.Query.ToString());
+                stringQuery.AllowLeadingWildcard = allowLeadingWildcard;
+                stringQuery.AnalyzeWildcard = analyzeWildCard;
+                stringQuery.FuzzyMinSim = fuzzyMinSim;
+            });
+        }
+        
+        /// <summary>
+        /// Adds wildcards in at the *front and at the end* of the string.
+        /// </summary>
+        /// <param name="query">The query.</param>
+        /// <returns></returns>
+        private static string AddWildcards(string query)
+        {
+            var sb = new StringBuilder();
+            if (!query.StartsWith("*"))
+            {
+                sb.Append("*");
+            }
+
+            sb.Append(query);
+
+            if (!query.EndsWith("*"))
+            {
+                sb.Append("*");
+            }
+            return sb.ToString();
+        }
+
     }
 }
