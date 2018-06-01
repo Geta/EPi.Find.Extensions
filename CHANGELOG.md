@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.0.6]
+
+### Added
+* Methods for handling find exceptions
+
+### Changed
+* Updated Episerver Find
+
 ## [0.0.3, 0.0.5]
 
 ### Added
