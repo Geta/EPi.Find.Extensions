@@ -12,7 +12,6 @@ namespace Geta.EPi.Find.Extensions
 {
     public static class TypeSearchExtensions
     {
-
         /// <summary>
         /// Add a filter conditionally, makes it easier to write a fluent query.
         /// </summary>
@@ -20,8 +19,9 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="search">The search.</param>
         /// <param name="condition">if set to <c>true</c> the filterExpression will be added.</param>
         /// <param name="filterExpression">The filter expression.</param>
-        /// <returns></returns>
-        public static ITypeSearch<TSource> ConditionalFilter<TSource>(this ITypeSearch<TSource> search, bool condition, Expression<Func<TSource, Filter>> filterExpression)
+        /// <returns>Updated search.</returns>
+        public static ITypeSearch<TSource> ConditionalFilter<TSource>(
+            this ITypeSearch<TSource> search, bool condition, Expression<Func<TSource, Filter>> filterExpression)
         {
             if (!condition)
             {
@@ -39,10 +39,11 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="search">The search.</param>
         /// <param name="fieldSelector">The field selector.</param>
         /// <param name="size">The number of facets to be returned.</param>
-        /// <returns></returns>
-        public static ITypeSearch<TSource> TermsFacetFor<TSource>(this ITypeSearch<TSource> search, Expression<Func<TSource, string>> fieldSelector, int? size)
+        /// <returns>Updated search.</returns>
+        public static ITypeSearch<TSource> TermsFacetFor<TSource>(
+            this ITypeSearch<TSource> search, Expression<Func<TSource, string>> fieldSelector, int? size)
         {
-            return search.AddTermsFacetFor<TSource>((Expression)fieldSelector, (Action<TermsFacetRequest>)null, size);
+            return search.AddTermsFacetFor(fieldSelector, null, size);
         }
 
         /// <summary>
@@ -53,26 +54,44 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="search">The search.</param>
         /// <param name="fieldSelector">The field selector.</param>
         /// <param name="size">The number of facets to be returned.</param>
-        /// <returns></returns>
-        public static ITypeSearch<TSource> TermsFacetFor<TSource>(this ITypeSearch<TSource> search, Expression<Func<TSource, int>> fieldSelector, int? size)
+        /// <returns>Updated search.</returns>
+        public static ITypeSearch<TSource> TermsFacetFor<TSource>(
+            this ITypeSearch<TSource> search, Expression<Func<TSource, int>> fieldSelector, int? size)
         {
-            return search.AddTermsFacetFor<TSource>((Expression)fieldSelector, (Action<TermsFacetRequest>)null, size);
+            return search.AddTermsFacetFor(fieldSelector, null, size);
         }
 
-        private static ITypeSearch<TSource> AddTermsFacetFor<TSource>(this ITypeSearch<TSource> search, Expression fieldSelector, Action<TermsFacetRequest> facetRequestAction, int? size)
+        /// <summary>
+        /// Filters by page and page size
+        /// </summary>
+        /// <typeparam name="TSource">The type of the source.</typeparam>
+        /// <param name="search">The search.</param>
+        /// <param name="page">Page number.</param>
+        /// <param name="pageSize">Page size.</param>
+        /// <returns>Updated search.</returns>
+        public static ITypeSearch<TSource> FilterPaging<TSource>(
+            this ITypeSearch<TSource> search, int page, int pageSize)
+        {
+            var take = pageSize;
+            var skip = pageSize * (page - 1);
+            return search.Skip(skip).Take(take);
+        }
+
+        private static ITypeSearch<TSource> AddTermsFacetFor<TSource>(
+            this ITypeSearch<TSource> search, Expression fieldSelector, Action<TermsFacetRequest> facetRequestAction, int? size)
         {
             fieldSelector.ValidateNotNullArgument("fieldSelector");
-            string fieldPath = fieldSelector.GetFieldPath();
-            string fieldName = search.Client.Conventions.FieldNameConvention.GetFieldName(fieldSelector);
-            Action<TermsFacetRequest> action = facetRequestAction;
-            return search.TermsFacetFor<TSource>(fieldPath, (Action<TermsFacetRequest>)(x =>
+            var fieldPath = fieldSelector.GetFieldPath();
+            var fieldName = search.Client.Conventions.FieldNameConvention.GetFieldName(fieldSelector);
+            var action = facetRequestAction;
+            return search.TermsFacetFor(fieldPath, x =>
             {
                 x.Field = fieldName;
                 x.Size = size;
                 if (!action.IsNotNull())
                     return;
                 action(x);
-            }));
+            });
         }
 
         /// <summary>
