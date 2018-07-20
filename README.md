@@ -69,7 +69,7 @@ return typeSearch.For(query, stringQuery =>
 
 ### Handle Client and Service exceptions
 
-Makes it easy to return an empty results instead of an error, useful in case find is unstable/down. See [this](https://world.episerver.com/blogs/Jonas-Bergqvist/Dates/2016/12/exceptions-in-find/) and [this].(https://www.brianweet.com/2017/03/17/handling-find-serviceexception.html)
+Makes it easy to return an empty results instead of an error, useful in case find is unstable/down. See [this](https://world.episerver.com/blogs/Jonas-Bergqvist/Dates/2016/12/exceptions-in-find/) and [this](https://www.brianweet.com/2017/03/17/handling-find-serviceexception.html)
 ```csharp
 // Throws exception
  var contentResult = search
