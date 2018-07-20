@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Linq.Expressions;
 using System.Text;
+using EPiServer.Core;
 using EPiServer.Find;
 using EPiServer.Find.Api.Facets;
 using EPiServer.Find.Api.Querying;
 using EPiServer.Find.Api.Querying.Queries;
+using EPiServer.Find.Cms;
 using EPiServer.Find.Helpers;
 using EPiServer.Find.Helpers.Reflection;
+using EPiServer.Find.UnifiedSearch;
+using EPiServer.Logging;
+using Geta.EPi.Find.Extensions.Models;
 
 namespace Geta.EPi.Find.Extensions
 {
     public static class TypeSearchExtensions
     {
+        private static readonly ILogger Log = LogManager.GetLogger(typeof(TypeSearchExtensions));
         /// <summary>
         /// Add a filter conditionally, makes it easier to write a fluent query.
         /// </summary>
@@ -137,5 +143,47 @@ namespace Geta.EPi.Find.Extensions
             return sb.ToString();
         }
 
+        /// Catches <see cref="ServiceException"/> and <see cref="ClientException"/> and returns an <see cref="EmptyContentResult"/>
+        /// </summary>
+        public static IContentResult<TContentData> GetContentResultSafe<TContentData>(
+            this ITypeSearch<TContentData> search,
+            int cacheForSeconds = 60,
+            bool cacheForEditorsAndAdmins = false) where TContentData : IContentData
+        {
+            IContentResult<TContentData> contentResult;
+            try
+            {
+                contentResult = search
+                    .GetContentResult(cacheForSeconds, cacheForEditorsAndAdmins);
+            }
+            catch (Exception ex) when (ex is ClientException || ex is ServiceException)
+            {
+                Log.Error("Could not retrieve data from find, returning empty contentresult", ex);
+                contentResult = new EmptyContentResult<TContentData>();
+            }
+            return contentResult;
+        }
+
+        /// <summary>
+        /// Catches <see cref="ServiceException"/> and <see cref="ClientException"/> and returns an <see cref="EmptyUnifiedSearchResults"/>
+        /// </summary>
+        public static UnifiedSearchResults GetResultSafe(
+            this ITypeSearch<ISearchContent> search,
+            HitSpecification hitSpecification = null,
+            bool filterForPublicSearch = true)
+        {
+            UnifiedSearchResults contentResult = null;
+            try
+            {
+                contentResult =
+                    search.GetResult(hitSpecification, filterForPublicSearch);
+            }
+            catch (Exception ex) when (ex is ClientException || ex is ServiceException)
+            {
+                Log.Error("Could not retrieve data from find, returning empty UnifiedSearchResults", ex);
+                contentResult = new EmptyUnifiedSearchResults();
+            }
+            return contentResult;
+        }
     }
 }

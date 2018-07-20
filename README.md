@@ -2,7 +2,7 @@
 
 ![](http://tc.geta.no/app/rest/builds/buildType:(id:TeamFrederik_EPiFindExtensions_EPiFindExtensionsDebug)/statusIcon)
 [![Platform](https://img.shields.io/badge/Platform-.NET%204.5.2-blue.svg?style=flat)](https://msdn.microsoft.com/en-us/library/w0x726c2%28v=vs.110%29.aspx)
-[![Platform](https://img.shields.io/badge/Episerver-%2010-orange.svg?style=flat)](http://world.episerver.com/cms/)
+[![Platform](https://img.shields.io/badge/Episerver-%2011-orange.svg?style=flat)](http://world.episerver.com/cms/)
 
 ## Description
 Extension methods for EPiServer Find.
@@ -64,6 +64,19 @@ return typeSearch.For(query, stringQuery =>
                 stringQuery.AnalyzeWildcard = analyzeWildCard;
                 stringQuery.FuzzyMinSim = fuzzyMinSim;
             });
+
+```
+
+### Handle Client and Service exceptions
+
+Makes it easy to return an empty results instead of an error, useful in case find is unstable/down. See [this](https://world.episerver.com/blogs/Jonas-Bergqvist/Dates/2016/12/exceptions-in-find/) and [this].(https://www.brianweet.com/2017/03/17/handling-find-serviceexception.html)
+```csharp
+// Throws exception
+ var contentResult = search
+        .GetContentResult(cacheForSeconds, cacheForEditorsAndAdmins);
+// Returns empty result in case of ClientException or ServiceException
+ var contentResult = search
+        .GetContentResultSafe(cacheForSeconds, cacheForEditorsAndAdmins);
 
 ```
 
