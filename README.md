@@ -20,7 +20,7 @@ int? someId = ....;
 var searchResult = client.Search<any>()
                 .Filter(x => x.ExampleProp1.Match(true))
 				// Only apply filter if someId has a value
-                .ConditionalFilter(someId.HasValue, x => x.ExampleProp2.Match(someId.Value))
+                .Conditional(someId.HasValue, r => r.Filter(x => x.ExampleProp2.Match(someId.Value)))
 				.Filter(x => x.ExampleProp3);
 ```
 
