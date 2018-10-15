@@ -82,3 +82,6 @@ Makes it easy to return an empty results instead of an error, useful in case fin
 
 ## Package Maintainer
 https://github.com/DigIntSys
+
+## Changelog
+[Changelog](CHANGELOG.md)

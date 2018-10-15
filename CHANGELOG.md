@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.0.1]
+
+### Added
+* Added Conditional method to add a filter expression if condition is true
+
+### Changed
+* Marked ConditionalFilter as obsolete (use Conditional method instead)
+
 ## [1.0.0]
 
 ### Added
