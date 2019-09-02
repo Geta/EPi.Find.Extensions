@@ -64,6 +64,12 @@ return typeSearch.For(query, stringQuery =>
                 stringQuery.AnalyzeWildcard = analyzeWildCard;
                 stringQuery.FuzzyMinSim = fuzzyMinSim;
             });
+			
+### Wildcards with best bets applied
+```csharp
+var searchResult = SearchClient.Instance.Search<ArticlePage>()
+                .ForWithWildcards(searchQuery, (x => x.Title, 1.5), (x => x.Name, 0.5))
+                .GetContentResultSafe();
 
 ```
 

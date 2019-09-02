@@ -62,6 +62,9 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="EPiCode.InspectInIndex, Version=1.5.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPiCode.InspectInIndex.1.5.0\lib\net45\EPiCode.InspectInIndex.dll</HintPath>
+    </Reference>
     <Reference Include="EPiServer, Version=11.11.3.0, Culture=neutral, PublicKeyToken=8fe83dea738b45b7, processorArchitecture=MSIL">
       <HintPath>..\packages\EPiServer.CMS.Core.11.11.3\lib\net461\EPiServer.dll</HintPath>
     </Reference>
@@ -318,6 +321,8 @@
     <Compile Include="Business\Rendering\TemplateCoordinator.cs" />
     <Compile Include="Business\ServiceLocatorDependencyResolver.cs" />
     <Compile Include="Business\UIDescriptors\ContainerPageUIDescriptor.cs" />
+    <Compile Include="Controllers\WildcardBestBetsSearchBlockController.cs" />
+    <Compile Include="Controllers\ConditionalSearchBlockController.cs" />
     <Compile Include="Controllers\ContactBlockController.cs" />
     <Compile Include="Controllers\DefaultPageController.cs" />
     <Compile Include="Controllers\FindSearchPageController.cs" />
@@ -337,12 +342,14 @@
     <Compile Include="Helpers\UrlHelpers.cs" />
     <Compile Include="Models\Blocks\ButtonBlock.cs" />
     <Compile Include="Models\Blocks\ContactBlock.cs" />
+    <Compile Include="Models\Blocks\ConditionalSearchBlock.cs" />
     <Compile Include="Models\Blocks\EditorialBlock.cs" />
     <Compile Include="Models\Blocks\JumbotronBlock.cs" />
     <Compile Include="Models\Blocks\PageListBlock.cs" />
     <Compile Include="Models\Blocks\SiteBlockData.cs" />
     <Compile Include="Models\Blocks\SiteLogotypeBlock.cs" />
     <Compile Include="Models\Blocks\TeaserBlock.cs" />
+    <Compile Include="Models\Blocks\WildcardBestBetsSearchBlock.cs" />
     <Compile Include="Models\Media\GenericMedia.cs" />
     <Compile Include="Models\Media\ImageFile.cs" />
     <Compile Include="Models\Media\VideoFile.cs" />
@@ -362,6 +369,9 @@
     <Compile Include="Models\Register\RegisterViewModel.cs" />
     <Compile Include="Models\SiteContentType.cs" />
     <Compile Include="Models\SiteImageUrl.cs" />
+    <Compile Include="Models\ViewModels\ArticleModel.cs" />
+    <Compile Include="Models\ViewModels\WildcardBestBetsSearchBlockModel.cs" />
+    <Compile Include="Models\ViewModels\ConditionalSearchBlockModel.cs" />
     <Compile Include="Models\ViewModels\ContactBlockModel.cs" />
     <Compile Include="Models\ViewModels\ContentRenderingErrorModel.cs" />
     <Compile Include="Models\ViewModels\FindSearchContentModel.cs" />
@@ -474,6 +484,7 @@
     <Content Include="modules\_protected\CMS\web.config" />
     <Content Include="modules\_protected\CMS\CMS.zip" />
     <Content Include="module.config" />
+    <Content Include="modules\_protected\EPiCode.InspectInIndex\EPiCode.InspectInIndex.zip" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\FindTemplateHint.cshtml" />
     <Content Include="Views\FindSearchPage\Index.cshtml" />
@@ -515,6 +526,8 @@
     <Content Include="Views\ImageFile\Index.cshtml" />
     <Content Include="Views\ContactBlock\Index.cshtml" />
     <Content Include="Views\ArticlePage\Index.cshtml" />
+    <Content Include="Views\ConditionalSearchBlock\Index.cshtml" />
+    <Content Include="Views\WildcardBestBetsSearchBlock\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

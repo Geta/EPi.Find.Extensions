@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using EPiServer.Core;
@@ -29,7 +31,9 @@ namespace Geta.EPi.Find.Extensions
         /// <returns>Updated search.</returns>
         [Obsolete("Use the Conditional method instead")]
         public static ITypeSearch<TSource> ConditionalFilter<TSource>(
-            this ITypeSearch<TSource> search, bool condition, Expression<Func<TSource, Filter>> filterExpression)
+            this ITypeSearch<TSource> search, 
+            bool condition, 
+            Expression<Func<TSource, Filter>> filterExpression)
         {
             if (!condition)
             {
@@ -47,7 +51,9 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="condition">if set to <c>true</c> the filterExpression will be added.</param>
         /// <param name="request">The filter expression.</param>
         /// <returns>Updated search.</returns>
-        public static ITypeSearch<TSource> Conditional<TSource>(this ITypeSearch<TSource> search, bool condition,
+        public static ITypeSearch<TSource> Conditional<TSource>(
+            this ITypeSearch<TSource> search, 
+            bool condition,
             Func<ITypeSearch<TSource>, ITypeSearch<TSource>> request)
         {
             if (!condition)
@@ -67,7 +73,9 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="size">The number of facets to be returned.</param>
         /// <returns>Updated search.</returns>
         public static ITypeSearch<TSource> TermsFacetFor<TSource>(
-            this ITypeSearch<TSource> search, Expression<Func<TSource, string>> fieldSelector, int? size)
+            this ITypeSearch<TSource> search, 
+            Expression<Func<TSource, string>> fieldSelector, 
+            int? size)
         {
             return search.AddTermsFacetFor(fieldSelector, null, size);
         }
@@ -82,7 +90,9 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="size">The number of facets to be returned.</param>
         /// <returns>Updated search.</returns>
         public static ITypeSearch<TSource> TermsFacetFor<TSource>(
-            this ITypeSearch<TSource> search, Expression<Func<TSource, int>> fieldSelector, int? size)
+            this ITypeSearch<TSource> search, 
+            Expression<Func<TSource, int>> fieldSelector, 
+            int? size)
         {
             return search.AddTermsFacetFor(fieldSelector, null, size);
         }
@@ -96,7 +106,9 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="pageSize">Page size.</param>
         /// <returns>Updated search.</returns>
         public static ITypeSearch<TSource> FilterPaging<TSource>(
-            this ITypeSearch<TSource> search, int page, int pageSize)
+            this ITypeSearch<TSource> search, 
+            int page, 
+            int pageSize)
         {
             var take = pageSize;
             var skip = pageSize * (page - 1);
@@ -104,7 +116,9 @@ namespace Geta.EPi.Find.Extensions
         }
 
         private static ITypeSearch<TSource> AddTermsFacetFor<TSource>(
-            this ITypeSearch<TSource> search, Expression fieldSelector, Action<TermsFacetRequest> facetRequestAction, int? size)
+            this ITypeSearch<TSource> search, 
+            Expression fieldSelector, 
+            Action<TermsFacetRequest> facetRequestAction, int? size)
         {
             fieldSelector.ValidateNotNullArgument("fieldSelector");
             var fieldPath = fieldSelector.GetFieldPath();
@@ -130,7 +144,12 @@ namespace Geta.EPi.Find.Extensions
         /// <param name="analyzeWildCard"></param>
         /// <param name="fuzzyMinSim"></param>
         /// <returns></returns>
-        public static IQueriedSearch<TSource, QueryStringQuery> ForWildcardSearch<TSource>(this ITypeSearch<TSource> typeSearch, string query, bool allowLeadingWildcard = true, bool analyzeWildCard = true, double fuzzyMinSim = 0.9)
+        public static IQueriedSearch<TSource, QueryStringQuery> ForWildcardSearch<TSource>(
+            this ITypeSearch<TSource> typeSearch, 
+            string query, 
+            bool allowLeadingWildcard = true, 
+            bool analyzeWildCard = true, 
+            double fuzzyMinSim = 0.9)
         {
             return typeSearch.For(query, stringQuery =>
             {
@@ -140,7 +159,7 @@ namespace Geta.EPi.Find.Extensions
                 stringQuery.FuzzyMinSim = fuzzyMinSim;
             });
         }
-        
+
         /// <summary>
         /// Adds wildcards in at the *front and at the end* of the string.
         /// </summary>
@@ -204,6 +223,73 @@ namespace Geta.EPi.Find.Extensions
                 contentResult = new EmptyUnifiedSearchResults();
             }
             return contentResult;
+        }
+
+        public static ITypeSearch<T> ForWithWildcards<T>(
+            this ITypeSearch<T> search,
+            string query, 
+            params (Expression<Func<T, string>>, double?)[] fieldSelectors)
+        {
+            return search
+                    .For(query)
+                    .InFields(fieldSelectors.Select(x => x.Item1).ToArray())
+                    .ApplyBestBets()
+                    .WildcardSearch(query, fieldSelectors);
+        }
+
+        public static ITypeSearch<T> WildcardSearch<T>(
+            this ITypeSearch<T> search,
+            string query, 
+            params (Expression<Func<T, string>>, double?)[] fieldSelectors)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+                return search;
+
+            query = query.ToLowerInvariant().Replace('\'', '*');
+
+            var words = query.Split(new[] { " " }, StringSplitOptions.RemoveEmptyEntries)
+                .Select(WrapInAsterisks)
+                .ToList();
+
+            var wildcardQueries = new List<WildcardQuery>();
+
+            foreach (var fieldSelector in fieldSelectors)
+            {
+                string fieldName = search.Client.Conventions
+                    .FieldNameConvention
+                    .GetFieldNameForAnalyzed(fieldSelector.Item1);
+
+                foreach (var word in words)
+                {
+                    wildcardQueries.Add(new WildcardQuery(fieldName, word)
+                    {
+                        Boost = fieldSelector.Item2
+                    });
+                }
+            }
+
+            return new Search<T, WildcardQuery>(search, context =>
+            {
+                var boolQuery = new BoolQuery();
+
+                if (context.RequestBody.Query != null)
+                {
+                    boolQuery.Should.Add(context.RequestBody.Query);
+                }
+
+                foreach (var wildcardQuery in wildcardQueries)
+                {
+                    boolQuery.Should.Add(wildcardQuery);
+                }
+
+                boolQuery.MinimumNumberShouldMatch = 1;
+                context.RequestBody.Query = boolQuery;
+            });
+        }
+
+        public static string WrapInAsterisks(string searchQueryPart)
+        {
+            return string.IsNullOrWhiteSpace(searchQueryPart) ? "*" : $"*{searchQueryPart.Trim().Trim('*')}*";
         }
     }
 }

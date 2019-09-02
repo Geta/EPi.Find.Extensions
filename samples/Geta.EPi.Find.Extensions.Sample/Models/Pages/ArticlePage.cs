@@ -1,3 +1,7 @@
+using EPiServer.DataAbstraction;
+using EPiServer.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+
 namespace Geta.EPi.Find.Extensions.Sample.Models.Pages
 {
     /// <summary>
@@ -9,6 +13,11 @@ namespace Geta.EPi.Find.Extensions.Sample.Models.Pages
     [SiteImageUrl(Global.StaticGraphicsFolderPath + "page-type-thumbnail-article.png")]
     public class ArticlePage : StandardPage
     {
-
+        [Display(
+            GroupName = SystemTabNames.Content,
+            Order = 1)]
+        [CultureSpecific]
+        [Searchable]
+        public virtual string Title { get; set; }
     }
 }

@@ -16,6 +16,7 @@ namespace Geta.EPi.Find.Extensions.Sample.Models.Pages
             GroupName = SystemTabNames.Content,
             Order = 310)]
         [CultureSpecific]
+        [Searchable]
         public virtual XhtmlString MainBody { get; set; }
 
         [Display(
