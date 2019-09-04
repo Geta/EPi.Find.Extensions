@@ -9,11 +9,5 @@ RUN Add-WindowsFeature Web-WebSockets
 ARG source
 WORKDIR /inetpub/wwwroot
 COPY ${source:-obj/Docker/publish} .
-WORKDIR /
-RUN MKDIR data
-WORKDIR data
-RUN MKDIR ClientResources
-RUN MKDIR Views
 WORKDIR /inetpub/wwwroot
 
-RUN New-WebVirtualDirectory -Site 'Default Web Site' -Name 'Episerver/Geta.EPi.Find.Extensions/' -PhysicalPath c:\data\

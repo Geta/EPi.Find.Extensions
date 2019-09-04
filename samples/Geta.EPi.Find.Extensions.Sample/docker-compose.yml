@@ -8,11 +8,9 @@ services:
       dockerfile: Dockerfile
     networks: 
       geta-epi-find-extensions-network:
-        ipv4_address: 172.16.238.81
+        ipv4_address: 172.16.238.75
     depends_on:
      - geta-epi-find-extensions-sample-db
-    volumes:
-      - ../../src/module/:C:/data/
     mac_address: 84-69-95-6C-7F-85
   geta-epi-find-extensions-sample-db:
     image: microsoft/mssql-server-windows-developer:1709
@@ -24,7 +22,7 @@ services:
       - ../Geta.EPi.Find.Extensions.Sample/App_Data:C:/data/
     networks:
       geta-epi-find-extensions-network:
-        ipv4_address: 172.16.238.82
+        ipv4_address: 172.16.238.76
 networks:
   geta-epi-find-extensions-network:
     ipam:

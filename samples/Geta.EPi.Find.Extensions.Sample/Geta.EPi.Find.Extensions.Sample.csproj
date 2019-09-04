@@ -469,9 +469,6 @@
     </Content>
     <Content Include="App_Data\GeoLiteCity.dat" />
     <Content Include="App_Data\DefaultSiteContent.episerverdata" />
-    <Content Include="docker-compose.dcproj" />
-    <Content Include="docker-compose.override.yml" />
-    <Content Include="docker-compose.yml" />
     <None Include="Dockerfile" />
     <None Include=".dockerignore">
       <DependentUpon>Dockerfile</DependentUpon>

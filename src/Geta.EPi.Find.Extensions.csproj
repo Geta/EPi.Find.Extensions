@@ -201,7 +201,6 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="Geta.EPi.Find.Extensions.nuspec" />
-    <None Include="module\module.config" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
