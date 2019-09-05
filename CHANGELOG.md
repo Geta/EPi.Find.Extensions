@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [3.0.0]
+## [2.1.0]
 
 ### Added
 * Added ForWithWildcards search extension for searching with best bets applied
