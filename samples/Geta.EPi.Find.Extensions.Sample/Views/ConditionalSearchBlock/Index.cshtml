@@ -1,0 +1,16 @@
+﻿@model ConditionalSearchBlockModel
+
+<div class="row">
+    <h2 style="margin-bottom: 60px; font-size: 24px; text-align: center;">This is result of conditional search for: @Model.SearchQuery</h2>
+    @foreach (var article in Model.ArticleResults)
+    {
+        <div class="span3" style="border: 2px solid #ccc; box-shadow: 4px 5px 2px #ccc; padding: 20px;">
+            <div style="margin-bottom: 40px; text-align: center; font-size: 18px; font-weight: bold;">
+                @article.Title
+            </div>
+            <div style="font-size: 12px;">
+                @Html.XhtmlString(@article.Description)
+            </div>
+        </div>
+    }
+</div>
