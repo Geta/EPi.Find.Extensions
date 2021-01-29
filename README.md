@@ -1,6 +1,9 @@
 ## Geta.EPi.Find.Extensions
 
-![](<http://tc.geta.no/app/rest/builds/buildType:(id:TeamFrederik_EPiFindExtensions_EPiFindExtensionsDebug)/statusIcon>)
+* Master<br>
+![](http://tc.geta.no/app/rest/builds/buildType:(id:GetaPackages_EPiFindExtensions_00ci),branch:master/statusIcon)
+* Develop<br>
+![](http://tc.geta.no/app/rest/builds/buildType:(id:GetaPackages_EPiFindExtensions_00ci),branch:develop/statusIcon)
 [![Platform](https://img.shields.io/badge/Platform-.NET%204.6.1-blue.svg?style=flat)](https://msdn.microsoft.com/en-us/library/w0x726c2%28v=vs.110%29.aspx)
 [![Platform](https://img.shields.io/badge/Episerver-%2011-orange.svg?style=flat)](http://world.episerver.com/cms/)
 
