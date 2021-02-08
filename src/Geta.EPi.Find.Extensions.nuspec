@@ -12,6 +12,7 @@
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <copyright>Copyright © 2016 Geta</copyright>
     <tags>EPiServer Find</tags>
+    <repository type="git" url="URL" branch="BRANCH_NAME" commit="COMMIT" />
     <dependencies>
       <dependency id="EPiServer.Find" version="[13.0.1, 14)" />
       <dependency id="EPiServer.CMS.Core" version="[11, 12)" />
